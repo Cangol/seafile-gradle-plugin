@@ -21,8 +21,17 @@ import org.apache.http.util.EntityUtils
 
 import javax.net.ssl.*
 import java.nio.charset.Charset
+import java.security.InvalidKeyException
+import java.security.NoSuchAlgorithmException
+import java.security.NoSuchProviderException
+import java.security.Principal
+import java.security.PublicKey
 import java.security.SecureRandom
+import java.security.SignatureException
+import java.security.cert.CertificateEncodingException
 import java.security.cert.CertificateException
+import java.security.cert.CertificateExpiredException
+import java.security.cert.CertificateNotYetValidException
 import java.security.cert.X509Certificate
 
 class UploadClient {
@@ -127,10 +136,10 @@ class UploadClient {
 
     HttpClient getUnSafeHttpClient() {
         SSLContext sslContext = null
-        X509TrustManager trustManager = new UnSafeTrustManager()
+        TrustManager[] trustManagers = [new UnSafeTrustManager()] as  TrustManager[]
         try {
             sslContext = SSLContext.getInstance("TLS")
-            sslContext.init(null, new TrustManager[]{trustManager}, new SecureRandom())
+            sslContext.init(null, trustManagers, new SecureRandom())
         } catch (Exception e) {
             log.info("getUnSafeOkHttp:" + e.getMessage())
         }
@@ -188,7 +197,138 @@ class UploadClient {
 
         @Override
         X509Certificate[] getAcceptedIssuers() {
-            return new X509Certificate[]{}
+            X509Certificate[] _AcceptedIssuers = [  new X509Certificate(){
+                @Override
+                void checkValidity() throws CertificateExpiredException, CertificateNotYetValidException {
+
+                }
+
+                @Override
+                void checkValidity(Date date) throws CertificateExpiredException, CertificateNotYetValidException {
+
+                }
+
+                @Override
+                int getVersion() {
+                    return 0
+                }
+
+                @Override
+                BigInteger getSerialNumber() {
+                    return null
+                }
+
+                @Override
+                Principal getIssuerDN() {
+                    return null
+                }
+
+                @Override
+                Principal getSubjectDN() {
+                    return null
+                }
+
+                @Override
+                Date getNotBefore() {
+                    return null
+                }
+
+                @Override
+                Date getNotAfter() {
+                    return null
+                }
+
+                @Override
+                byte[] getTBSCertificate() throws CertificateEncodingException {
+                    return new byte[0]
+                }
+
+                @Override
+                byte[] getSignature() {
+                    return new byte[0]
+                }
+
+                @Override
+                String getSigAlgName() {
+                    return null
+                }
+
+                @Override
+                String getSigAlgOID() {
+                    return null
+                }
+
+                @Override
+                byte[] getSigAlgParams() {
+                    return new byte[0]
+                }
+
+                @Override
+                boolean[] getIssuerUniqueID() {
+                    return new boolean[0]
+                }
+
+                @Override
+                boolean[] getSubjectUniqueID() {
+                    return new boolean[0]
+                }
+
+                @Override
+                boolean[] getKeyUsage() {
+                    return new boolean[0]
+                }
+
+                @Override
+                int getBasicConstraints() {
+                    return 0
+                }
+
+                @Override
+                byte[] getEncoded() throws CertificateEncodingException {
+                    return new byte[0]
+                }
+
+                @Override
+                void verify(PublicKey key) throws CertificateException, NoSuchAlgorithmException, InvalidKeyException, NoSuchProviderException, SignatureException {
+
+                }
+
+                @Override
+                void verify(PublicKey key, String sigProvider) throws CertificateException, NoSuchAlgorithmException, InvalidKeyException, NoSuchProviderException, SignatureException {
+
+                }
+
+                @Override
+                String toString() {
+                    return null
+                }
+
+                @Override
+                PublicKey getPublicKey() {
+                    return null
+                }
+
+                @Override
+                boolean hasUnsupportedCriticalExtension() {
+                    return false
+                }
+
+                @Override
+                Set<String> getCriticalExtensionOIDs() {
+                    return null
+                }
+
+                @Override
+                Set<String> getNonCriticalExtensionOIDs() {
+                    return null
+                }
+
+                @Override
+                byte[] getExtensionValue(String oid) {
+                    return new byte[0]
+                }
+            } ] as X509Certificate[]
+            return _AcceptedIssuers
         }
     }
 }
