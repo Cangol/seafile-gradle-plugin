@@ -1,0 +1,2 @@
+include ':seafile-gradle-plugin'
+include ':app'

@@ -1,0 +1,45 @@
+apply plugin: 'com.android.application'
+
+apply plugin: 'mobi.cangol.plugin.seafile'
+
+uploadSeaFile{
+    server 'https://yinfile.bigdata.ytx.com'
+    token '45866cda94fbc35408d3d4f9a55e08dd1f6f0215'
+    repo '6d9b5843-53f5-4222-a065-9ae01baff2e5'
+    debugDir '/方德港美股/Release/android'
+}
+
+android {
+    compileSdkVersion 30
+    buildToolsVersion "30.0.2"
+
+    defaultConfig {
+        applicationId "mobi.cangol.plugin.seafile"
+        minSdkVersion 16
+        targetSdkVersion 30
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'com.google.android.material:material:1.2.1'
+    testImplementation 'junit:junit:4.+'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    //api project(':seafile-gradle-plugin')
+}
