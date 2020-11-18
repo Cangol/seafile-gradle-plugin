@@ -22,21 +22,21 @@ class UploadTask extends DefaultTask {
                 String apkPath = apkOutput.outputFile.getAbsolutePath()
                 log.info("apkPath ===> " + apkPath)
 
-                def destDir=extension.getProperty(variant.buildType.name+"Dir");
-                if(destDir==null){
-                    destDir=""
+                def destDirPath=extension.getProperty(variant.buildType.name+"Dir");
+                if(destDirPath==null){
+                        destDirPath=""
                 }
-                log.info("destDir ===> " + destDir)
+                log.info("destDirPath ===> " + destDirPath)
 
-                def result=createDir(destDir)
+                def fileDir="V"+variant.versionName+"."+variant.versionCode+"_"+new Date().format("yyyy-MM-dd_HH-mm-ss", TimeZone.getTimeZone("GMT+8"));
+                def destDir=destDirPath+"/"+fileDir
+                def result=client.createDir(destDir)
                 log.info("createDir ===> " + result)
 
-                def file=new File(apkPath)
-                def filename="V"+variant.versionName+"."+variant.versionCode+"_"+new Date().format("yyyy-MM-dd_HH-mm-ss", TimeZone.getTimeZone("GMT+8"));
                 def link=client.getUploadLink(destDir)
                 log.info("uploadLink ===> " + link)
 
-                def url=client.upload(link,destDir,filename,apkPath)
+                def url=client.upload(link,destDir,apkOutput.outputFile.name,apkPath)
                 log.info("upload ===> " + url)
 
         }

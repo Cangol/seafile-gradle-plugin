@@ -35,7 +35,7 @@ class UploadPlugin implements Plugin<Project> {
             uploadApkTask.extension = seaExtension
             uploadApkTask.variant = variant
             uploadApkTask.description = "Uploads the APK for the ${variationName} build"
-            uploadApkTask.group = "upload"
+            uploadApkTask.group = "seafile"
             uploadApkTask.dependsOn assembleTask
         }
     }

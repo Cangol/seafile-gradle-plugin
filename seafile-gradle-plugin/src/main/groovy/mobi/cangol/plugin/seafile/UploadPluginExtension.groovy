@@ -5,4 +5,6 @@ class UploadPluginExtension {
     String repo
     String token
     String dependsOn
+    String debugDir
+    String releaseDir
 }
