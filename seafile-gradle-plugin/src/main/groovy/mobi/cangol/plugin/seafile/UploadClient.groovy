@@ -125,7 +125,7 @@ class UploadClient {
         return null
     }
 
-    public HttpClient getUnSafeHttpClient() {
+    HttpClient getUnSafeHttpClient() {
         SSLContext sslContext = null
         X509TrustManager trustManager = new UnSafeTrustManager()
         try {
@@ -138,22 +138,22 @@ class UploadClient {
                 .setHostnameVerifier(new X509HostnameVerifier() {
 
                     @Override
-                    public boolean verify(String s, SSLSession sslSession) {
+                    boolean verify(String s, SSLSession sslSession) {
                         return true
                     }
 
                     @Override
-                    public void verify(String host, SSLSocket ssl) throws IOException {
+                    void verify(String host, SSLSocket ssl) throws IOException {
 
                     }
 
                     @Override
-                    public void verify(String host, X509Certificate cert) throws SSLException {
+                    void verify(String host, X509Certificate cert) throws SSLException {
 
                     }
 
                     @Override
-                    public void verify(String host, String[] cns, String[] subjectAlts) throws SSLException {
+                    void verify(String host, String[] cns, String[] subjectAlts) throws SSLException {
 
                     }
                 })
@@ -164,30 +164,30 @@ class UploadClient {
     static class MyConnectionSocketFactory extends SSLConnectionSocketFactory {
         private SSLContext sslContext
 
-        public MyConnectionSocketFactory(final SSLContext sslContext) {
+        MyConnectionSocketFactory(final SSLContext sslContext) {
             super(sslContext)
             this.sslContext = sslContext
         }
 
         @Override
-        public Socket createSocket(final HttpContext context) throws IOException {
+        Socket createSocket(final HttpContext context) throws IOException {
             return sslContext.getSocketFactory().createSocket()
         }
     }
 
     static class UnSafeTrustManager implements X509TrustManager {
         @Override
-        public void checkClientTrusted(X509Certificate[] chain, String authType)
+        void checkClientTrusted(X509Certificate[] chain, String authType)
                 throws CertificateException {
         }
 
         @Override
-        public void checkServerTrusted(X509Certificate[] chain, String authType)
+        void checkServerTrusted(X509Certificate[] chain, String authType)
                 throws CertificateException {
         }
 
         @Override
-        public X509Certificate[] getAcceptedIssuers() {
+        X509Certificate[] getAcceptedIssuers() {
             return new X509Certificate[]{}
         }
     }
