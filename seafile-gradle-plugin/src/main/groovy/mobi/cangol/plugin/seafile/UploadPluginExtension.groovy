@@ -7,4 +7,7 @@ class UploadPluginExtension {
     String dependsOn
     String debugDir
     String releaseDir
+    String alphaDir
+    String pushDir
+    String trialDir
 }
