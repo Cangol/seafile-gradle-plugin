@@ -3,10 +3,11 @@ apply plugin: 'com.android.application'
 apply plugin: 'mobi.cangol.plugin.seafile'
 
 uploadSeaFile{
-    server 'https://yinfile.bigdata.ytx.com'
+    server 'https://app.seafile.com'
     token '45866cda94fbc35408d3d4f9a55e08dd1f6f0215'
     repo '6d9b5843-53f5-4222-a065-9ae01baff2e5'
-    debugDir '/方德港美股/Release/android'
+    debugDir '/app/Release/android'
+    releaseDir '/app/Release/android'
 }
 
 android {
@@ -18,7 +19,7 @@ android {
         minSdkVersion 16
         targetSdkVersion 30
         versionCode 1
-        versionName "1.0"
+        versionName "1.0.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -41,5 +42,4 @@ dependencies {
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-    //api project(':seafile-gradle-plugin')
 }
