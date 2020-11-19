@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'AndResGuard'
 apply plugin: 'mobi.cangol.plugin.seafile'
 
-uploadSeaFile{
+seafile{
     server 'https://app.seafile.com'
     token '45866cda94fbc35408d3d4f9a55e08dd1f6f0215'
     repo '6d9b5843-53f5-4222-a065-9ae01baff2e5'

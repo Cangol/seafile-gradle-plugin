@@ -13,15 +13,15 @@ class UploadPlugin implements Plugin<Project> {
         if (!hasAppPlugin) {
             throw new IllegalStateException("The 'com.android.application' plugin is required.")
         }
-        def seaExtension = project.extensions.create('uploadSeaFile', UploadPluginExtension)
+        def seaExtension = project.extensions.create('seafile', UploadPluginExtension)
 
         project.android.applicationVariants.all { variant ->
             if (seaExtension == null) {
-                log.error("Please config your uploadSeaFile(server,token|username+password,repo) in your build.gradle.")
+                log.error("Please config your seafile(server,token|username+password,repo) in your build.gradle.")
                 return
             }
             if (seaExtension.token==null&&(seaExtension.username==null&&seaExtension.password==null)) {
-                log.error("Please config your uploadSeaFile(token|username+password) in your build.gradle.")
+                log.error("Please config your seafile(token|username+password) in your build.gradle.")
                 return
             }
 
@@ -33,7 +33,7 @@ class UploadPlugin implements Plugin<Project> {
             }
             def productFlavorName = productFlavorNames.join('')
             def variationName = "${productFlavorName}${buildTypeName}"
-            def uploadApkTaskName = "uploadSeaFileApk${variationName}"
+            def uploadApkTaskName = "uploadApk${variationName}"
             def assembleTask = seaExtension.dependsOn != null ? "${seaExtension.dependsOn}${variationName}" : variant.assemble
             log.info("uploadApkTaskName == " + uploadApkTaskName)
             def uploadApkTask = project.tasks.create(uploadApkTaskName, UploadTask)
