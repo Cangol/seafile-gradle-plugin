@@ -7,6 +7,7 @@ Usage
         buildscript {
             repositories {
                 jcenter()
+                maven { url "https://dl.bintray.com/cangol/maven/" }
             }
             dependencies {
                 classpath 'com.android.tools.build:gradle:3.5.3'
