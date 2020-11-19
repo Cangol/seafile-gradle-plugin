@@ -22,6 +22,12 @@ class UploadTask extends DefaultTask {
         String apkPath = apkOutput.outputFile.getAbsolutePath()
         log.info("apkPath ===> " + apkPath)
 
+        def flag=""
+        if (!extension.flag.equalsIgnoreCase("")) {
+            flag="_"+extension.flag
+        }
+        log.error("flag ===> " + flag)
+
         def destDirPath = extension.getProperty(variant.buildType.name + "Dir");
         if (destDirPath == null) {
             destDirPath = ""
@@ -33,7 +39,7 @@ class UploadTask extends DefaultTask {
             log.info("getToken ===> " + extension.token)
         }
 
-        def fileDir = "V" + variant.versionName + "." + variant.versionCode + "_" + new Date().format("yyyy-MM-dd_HH-mm-ss", TimeZone.getTimeZone("GMT+8"));
+        def fileDir = "V" + variant.versionName + "." + variant.versionCode + "_" + new Date().format("yyyy-MM-dd_HH-mm-ss", TimeZone.getTimeZone("GMT+8"))+flag
         def destDir = destDirPath + "/" + fileDir
         def result = client.createDir(destDir)
         log.info("createDir ===> " + result)
