@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-
+apply plugin: 'AndResGuard'
 apply plugin: 'mobi.cangol.plugin.seafile'
 
 uploadSeaFile{
@@ -8,8 +8,83 @@ uploadSeaFile{
     repo '6d9b5843-53f5-4222-a065-9ae01baff2e5'
     debugDir '/app/Release/android'
     releaseDir '/app/Release/android'
+    dependsOn 'resguard'
 }
+andResGuard {
+    // mappingFile = file("./resource_mapping.txt")
+    mappingFile = null
+    // It will be invalid when you sign apk with schemaV2
+    use7zip = false
+    useSign = true
+    // it will keep the origin path of your resources when it's true
+    keepRoot = false
+    whiteList = [
+            // your icon
+            "R.drawable.icon",
+            // for fabric
+            "R.string.com.crashlytics.*",
+            // for umeng update
+            "R.string.umeng*",
+            "R.string.UM*",
+            "R.string.tb_*",
+            "R.layout.umeng*",
+            "R.layout.tb_*",
+            "R.drawable.umeng*",
+            "R.drawable.tb_*",
+            "R.anim.umeng*",
+            "R.color.umeng*",
+            "R.color.tb_*",
+            "R.style.*UM*",
+            "R.style.umeng*",
+            "R.id.umeng*",
+            // umeng share for sina
+            "R.drawable.sina*",
+            // for google-services.json
+            "R.string.google_app_id",
+            "R.string.gcm_defaultSenderId",
+            "R.string.default_web_client_id",
+            "R.string.ga_trackingId",
+            "R.string.firebase_database_url",
+            "R.string.google_api_key",
+            "R.string.google_crash_reporting_api_key",
+            "R.string.weibo_text",
+            "R.string.weixin_text",
+            "R.string.wcircle_text",
+            "R.string.qq_text",
+            "R.string.qqzone_text",
+            "R.mipmap.ic_voucher_remit_big",
+            "R.mipmap.ic_voucher_check_big",
+            "R.mipmap.ic_statusbar_icon",
+            "R.mipmap.ic_statusbar_icon_21",
+            "R.mipmap.ic_launcher",
+            // alibaba
+            "R.drawable.umcsdk*",
+            "R.drawable.authsdk*",
+            "R.layout.authsdk*",
+            "R.layout.widget_pns*",
+            "R.id.authsdk*",
+            "R.anim.authsdk*",
+            "R.anim.umcsdk*",
+            "R.style.authsdk*",
+            "R.drawable.ic_actionbar_close_light",
+            "R.drawable.ic_check_false_small",
+            "R.drawable.ic_check_true_small",
+            "R.drawable.common_btn_login_selector"
+    ]
+    compressFilePattern = [
+            "*.png",
+            "*.jpg",
+            "*.jpeg",
+            "*.gif",
+            "resources.arsc"
+    ]
+    sevenzip {
+        artifact = 'com.tencent.mm:SevenZip:1.2.15'
+        //path = "/usr/local/bin/7za"
+    }
 
+    //zipAlignPath = "D:\\Dev\\Android\\sdk\\build-tools\\27.0.3\\zipalign"
+}
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.2"
