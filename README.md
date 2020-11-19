@@ -17,7 +17,7 @@ Usage
 
         apply plugin: 'mobi.cangol.plugin.seafile'
 
-        uploadSeaFile{
+        seafile{
             server '替换为你的 seafile 主机地址' //如:https://app.seafile.com
             //推荐使用api token
             token '替换为你的 seafile Token' //如:45866cda94fbc35408d3d4f9a55e08dd1f6f0216
