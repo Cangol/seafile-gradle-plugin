@@ -18,21 +18,13 @@ import org.apache.http.impl.client.HttpClientBuilder
 import org.apache.http.message.BasicNameValuePair
 import org.apache.http.protocol.HttpContext
 import org.apache.http.util.EntityUtils
+import org.json.simple.JSONObject
+import org.json.simple.JSONValue
 
 import javax.net.ssl.*
 import java.nio.charset.Charset
-import java.security.InvalidKeyException
-import java.security.NoSuchAlgorithmException
-import java.security.NoSuchProviderException
-import java.security.Principal
-import java.security.PublicKey
-import java.security.SecureRandom
-import java.security.SignatureException
-import java.security.cert.CertificateEncodingException
-import java.security.cert.CertificateException
-import java.security.cert.CertificateExpiredException
-import java.security.cert.CertificateNotYetValidException
-import java.security.cert.X509Certificate
+import java.security.*
+import java.security.cert.*
 
 class UploadClient {
     private static final Log log = LogFactory.getLog(UploadClient.class)
@@ -107,7 +99,6 @@ class UploadClient {
         }
         return null
     }
-
     String getUploadLink(String destDir) {
         HttpClient httpClient = getUnSafeHttpClient()
         HttpGet httpGet = new HttpGet(extension.getServer() + "/api2/repos/" + extension.getRepo() + "/upload-link/?p=" + destDir)
@@ -125,6 +116,37 @@ class UploadClient {
                 return result
             } else {
                 log.error("getUploadLink statusCode=" + statusCode + "," + response.getEntity().toString())
+            }
+        } catch (Exception e) {
+            e.printStackTrace()
+        } finally {
+            httpClient.getConnectionManager().shutdown()
+        }
+        return null
+    }
+    String getToken() {
+        HttpClient httpClient = getUnSafeHttpClient()
+        HttpPost httpPost = new HttpPost(extension.getServer() + "/api2/auth-token/")
+        try {
+            List<NameValuePair> pairs = new ArrayList<>()
+            pairs.add(new BasicNameValuePair("username", extension.username))
+            pairs.add(new BasicNameValuePair("password", extension.password))
+            UrlEncodedFormEntity entity = new UrlEncodedFormEntity(pairs)
+            httpPost.setEntity(entity)
+            HttpResponse response = httpClient.execute(httpPost)
+            int statusCode = response.getStatusLine().getStatusCode()
+            if (statusCode == 200) {
+                String result = null
+                if (response.getEntity() != null) {
+                    result = EntityUtils.toString(new BufferedHttpEntity(response.getEntity()), "UTF-8")
+                    Object obj= JSONValue.parse(result);
+                    JSONObject jsonObject=(JSONObject)obj;
+                    result = (String)jsonObject.get("token")
+                }
+                log.info("getToken result=" + result)
+                return result
+            } else {
+                log.error("getToken statusCode=" + statusCode + "," + response.getEntity().toString())
             }
         } catch (Exception e) {
             e.printStackTrace()

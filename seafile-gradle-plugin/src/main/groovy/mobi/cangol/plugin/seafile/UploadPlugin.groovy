@@ -17,9 +17,14 @@ class UploadPlugin implements Plugin<Project> {
 
         project.android.applicationVariants.all { variant ->
             if (seaExtension == null) {
-                log.error("Please config your sea apiToken in your build.gradle.")
+                log.error("Please config your uploadSeaFile(server,token|username+password,repo) in your build.gradle.")
                 return
             }
+            if (seaExtension.token==null&&(seaExtension.username==null&&seaExtension.password==null)) {
+                log.error("Please config your uploadSeaFile(token|username+password) in your build.gradle.")
+                return
+            }
+
             def buildTypeName = variant.buildType.name.capitalize()
 
             def productFlavorNames = variant.productFlavors.collect { it.name.capitalize() }

@@ -18,7 +18,11 @@ Usage
 
         uploadSeaFile{
             server '替换为你的 seafile 主机地址' //如:https://app.seafile.com
+            //推荐使用api token
             token '替换为你的 seafile Token' //如:45866cda94fbc35408d3d4f9a55e08dd1f6f0216
+            //也可以使用username+password
+            //username '替换为你的 seafile username'
+            //password '替换为你的 seafile password'
             repo '替换为你的 seafile repo的id' //如:6d9b5843-53f5-4222-a065-9ae01baff2e6
             debugDir '替换为你的 seafile debug目录' //如:/app/Debug/
             releaseDir '替换为你的 seafile release目录' //如:/app/Release/

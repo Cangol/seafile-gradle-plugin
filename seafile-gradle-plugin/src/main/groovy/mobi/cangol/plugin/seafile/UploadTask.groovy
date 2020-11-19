@@ -28,6 +28,11 @@ class UploadTask extends DefaultTask {
         }
         log.info("destDirPath ===> " + destDirPath)
 
+        if (extension.token==null) {
+            extension.token=client.getToken();
+            log.info("getToken ===> " + extension.token)
+        }
+
         def fileDir = "V" + variant.versionName + "." + variant.versionCode + "_" + new Date().format("yyyy-MM-dd_HH-mm-ss", TimeZone.getTimeZone("GMT+8"));
         def destDir = destDirPath + "/" + fileDir
         def result = client.createDir(destDir)
