@@ -33,7 +33,7 @@ class UploadPlugin implements Plugin<Project> {
             }
             def productFlavorName = productFlavorNames.join('')
             def variationName = "${productFlavorName}${buildTypeName}"
-            def uploadApkTaskName = "uploadApk${variationName}"
+            def uploadApkTaskName = "seafileUpload${variationName}"
             def assembleTask = seaExtension.dependsOn != null ? "${seaExtension.dependsOn}${variationName}" : variant.assemble
             log.info("uploadApkTaskName == " + uploadApkTaskName)
             def uploadApkTask = project.tasks.create(uploadApkTaskName, UploadTask)
