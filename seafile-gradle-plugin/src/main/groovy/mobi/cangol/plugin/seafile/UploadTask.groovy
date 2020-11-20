@@ -20,35 +20,31 @@ class UploadTask extends DefaultTask {
         def apkOutput = variant.outputs.find { variantOutput -> variantOutput instanceof ApkVariantOutput }
 
         String apkPath = apkOutput.outputFile.getAbsolutePath()
-        log.info("apkPath ===> " + apkPath)
+        log.warn("apkPath ===> " + apkPath)
 
-        def flag=""
-        if (!extension.flag.equalsIgnoreCase("")) {
-            flag="_"+extension.flag
+        if (extension.token==null) {
+            extension.token=client.getToken();
+            log.warn("getToken ===> " + extension.token)
         }
-        log.error("flag ===> " + flag)
 
         def destDirPath = extension.getProperty(variant.buildType.name + "Dir");
         if (destDirPath == null) {
             destDirPath = ""
         }
-        log.info("destDirPath ===> " + destDirPath)
+        log.warn("destDirPath ===> " + destDirPath)
 
-        if (extension.token==null) {
-            extension.token=client.getToken();
-            log.info("getToken ===> " + extension.token)
+        def fileDir = destDirPath.substring(destDirPath.lastIndexOf("/")+1)
+        log.warn("fileDir ===> " + fileDir)
+        if(fileDir.startsWith("V")){
+            def result = client.createDir(destDirPath)
+            log.warn("createDir ===> " + result)
         }
 
-        def fileDir = "V" + variant.versionName + "." + variant.versionCode + "_" + new Date().format("yyyy-MM-dd_HH-mm-ss", TimeZone.getTimeZone("GMT+8"))+flag
-        def destDir = destDirPath + "/" + fileDir
-        def result = client.createDir(destDir)
-        log.info("createDir ===> " + result)
+        def link = client.getUploadLink(destDirPath)
+        log.warn("uploadLink ===> " + link)
 
-        def link = client.getUploadLink(destDir)
-        log.info("uploadLink ===> " + link)
-
-        def url = client.upload(link, destDir, apkOutput.outputFile.name, apkPath)
-        log.info("upload ===> " + url)
+        def url = client.upload(link, destDirPath, apkOutput.outputFile.name, apkPath)
+        log.warn("upload ===> " + url)
 
     }
 
