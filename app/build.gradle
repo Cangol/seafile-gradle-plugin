@@ -3,12 +3,15 @@ apply plugin: 'AndResGuard'
 apply plugin: 'mobi.cangol.plugin.seafile'
 
 seafile{
-    server 'https://app.seafile.com'
+    server 'https://yinfile.bigdata.ytx.com/'
     token '45866cda94fbc35408d3d4f9a55e08dd1f6f0215'
     repo '6d9b5843-53f5-4222-a065-9ae01baff2e5'
-    debugDir '/app/Release/android'
-    releaseDir '/app/Release/android'
+    debugDir "/方德港美股/Release/android/${getVersionFolder()}"
     dependsOn 'resguard'
+}
+def getVersionFolder() {
+    def time = new Date().format("yyyy-MM-dd_HH-mm-ss", TimeZone.getTimeZone("GMT+8"))
+    return "V1.0.0.1_" + time
 }
 andResGuard {
     // mappingFile = file("./resource_mapping.txt")
