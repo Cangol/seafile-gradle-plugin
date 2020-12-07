@@ -3,7 +3,7 @@ apply from: '../maven_push.gradle'
 dependencies {
     implementation gradleApi()
     implementation localGroovy()
-    compileOnly 'com.android.tools.build:gradle:3.5.3'
+    compileOnly 'com.android.tools.build:gradle:3.5.4'
 }
 task sourcesJar(type: Jar) {
     from sourceSets.main.allSource
