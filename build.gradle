@@ -8,11 +8,11 @@ buildscript {
         google()
     }
     dependencies {
-        classpath "com.android.tools.build:gradle:3.5.3"
+        classpath "com.android.tools.build:gradle:3.5.4"
         classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.5'
         classpath 'com.tencent.mm:AndResGuard-gradle-plugin:1.2.15'
-        classpath "mobi.cangol.plugin:seafile-gradle-plugin:1.0.0"
+        classpath "mobi.cangol.plugin:seafile-gradle-plugin:1.0.1"
     }
 }
 
